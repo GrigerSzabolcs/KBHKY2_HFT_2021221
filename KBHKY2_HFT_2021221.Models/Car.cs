@@ -21,6 +21,12 @@ namespace KBHKY2_HFT_2021221.Models
         public int BrandId { get; set; }
         [NotMapped]
         public virtual Brand Brand { get; set; }
+        [NotMapped]
+        public virtual ICollection<Owner> Owners { get; set; }
+        public Car()
+        {
+            Owners = new HashSet<Owner>();
+        }
 
     }
 }

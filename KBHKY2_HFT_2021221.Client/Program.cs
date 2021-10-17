@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KBHKY2_HFT_2021221.Data;
+using System;
 
 namespace KBHKY2_HFT_2021221.Client
 {
@@ -6,7 +7,7 @@ namespace KBHKY2_HFT_2021221.Client
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            OwnerCarBrandContext db = new OwnerCarBrandContext();
         }
     }
 }
