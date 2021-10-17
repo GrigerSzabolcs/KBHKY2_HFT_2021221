@@ -44,6 +44,29 @@ namespace KBHKY2_HFT_2021221.Data
                 .HasForeignKey(owner => owner.CarId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
+
+            Brand bmw = new Brand() { Id = 1, Name = "BMW" };
+            Brand citroen = new Brand() { Id = 2, Name = "Citroen" };
+            Brand audi = new Brand() { Id = 3, Name = "Audi" };
+
+            Car bmw1 = new Car() { Id = 1, BrandId = bmw.Id, BasePrice = 20000, Model = "BMW 116d" };
+            Car bmw2 = new Car() { Id = 2, BrandId = bmw.Id, BasePrice = 30000, Model = "BMW 510" };
+            Car citroen1 = new Car() { Id = 3, BrandId = citroen.Id, BasePrice = 10000, Model = "Citroen C1" };
+            Car citroen2 = new Car() { Id = 4, BrandId = citroen.Id, BasePrice = 15000, Model = "Citroen C3" };
+            Car audi1 = new Car() { Id = 5, BrandId = audi.Id, BasePrice = 20000, Model = "Audi A3" };
+            Car audi2 = new Car() { Id = 6, BrandId = audi.Id, BasePrice = 25000, Model = "Audi A4" };
+
+            Owner johhnyStinson = new Owner() { Id = 1, FirstName = "Johnny", LastName = "Stinson", Age = 56, CarId = 1 };
+            Owner wilburScott = new Owner() { Id = 2, FirstName = "Wilbur", LastName = "Scott", Age = 29, CarId = 2 };
+            Owner margaretRowell = new Owner() { Id = 3, FirstName = "Margaret", LastName = "Rowell", Age = 63, CarId = 3 };
+            Owner jamesLanctot = new Owner() { Id = 4, FirstName = "James", LastName = "Lanctot", Age = 40, CarId = 4 };
+            Owner jimAmos = new Owner() { Id = 5, FirstName = "Jim", LastName = "Amos", Age = 25, CarId = 5 };
+            Owner jimAmos2 = new Owner() { Id = 6, FirstName = "Jim", LastName = "Amos", Age = 56, CarId = 6 };
+
+            modelBuilder.Entity<Brand>().HasData(bmw, citroen, audi);
+            modelBuilder.Entity<Car>().HasData(bmw1, bmw2, citroen1, citroen2, audi1, audi2);
+            modelBuilder.Entity<Owner>().HasData(johhnyStinson, wilburScott, margaretRowell, jamesLanctot, jimAmos, jimAmos);
+
         }
     }
 }

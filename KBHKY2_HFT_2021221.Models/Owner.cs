@@ -14,7 +14,7 @@ namespace KBHKY2_HFT_2021221.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public string FristName { get; set; }
+        public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
         [Required]
