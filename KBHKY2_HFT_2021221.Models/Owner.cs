@@ -8,19 +8,20 @@ using System.Threading.Tasks;
 
 namespace KBHKY2_HFT_2021221.Models
 {
-    public class Car
+    public class Owner
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public string Model { get; set; }
+        public string FristName { get; set; }
         [Required]
-        public int BasePrice { get; set; }
-        [ForeignKey(nameof(Brand))]
-        public int BrandId { get; set; }
+        public string LastName { get; set; }
+        [Required]
+        public int Age { get; set; }
+        [ForeignKey(nameof(Car))]
+        public int CarId { get; set; }
         [NotMapped]
-        public virtual Brand Brand { get; set; }
-
+        public virtual Car Car { get; set; }
     }
 }
