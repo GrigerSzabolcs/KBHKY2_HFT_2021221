@@ -65,7 +65,7 @@ namespace KBHKY2_HFT_2021221.Data
 
             modelBuilder.Entity<Brand>().HasData(bmw, citroen, audi);
             modelBuilder.Entity<Car>().HasData(bmw1, bmw2, citroen1, citroen2, audi1, audi2);
-            modelBuilder.Entity<Owner>().HasData(johhnyStinson, wilburScott, margaretRowell, jamesLanctot, jimAmos, jimAmos);
+            modelBuilder.Entity<Owner>().HasData(johhnyStinson, wilburScott, margaretRowell, jamesLanctot, jimAmos, jimAmos2);
 
         }
     }
