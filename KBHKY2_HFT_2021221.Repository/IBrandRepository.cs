@@ -9,7 +9,7 @@ namespace KBHKY2_HFT_2021221.Repository
 {
     public interface IBrandRepository
     {
-        void Create(Brand car);
+        void Create(Brand brand);
         void Delete(int id);
         void Update(Brand brand);
         Brand Read(int id);
