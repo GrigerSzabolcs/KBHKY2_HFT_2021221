@@ -13,6 +13,6 @@ namespace KBHKY2_HFT_2021221.Repository
         void Delete(int id);
         Owner Read(int id);
         IQueryable<Owner> ReadAll();
-        void update(Owner owner);
+        void Update(Owner owner);
     }
 }
