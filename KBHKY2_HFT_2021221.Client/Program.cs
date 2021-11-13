@@ -11,10 +11,6 @@ namespace KBHKY2_HFT_2021221.Client
         {
             OwnerCarBrandContext db = new OwnerCarBrandContext();
 
-            var owners = db.Owners.ToArray();
-            ;
-            
-
         }
     }
 }
