@@ -58,6 +58,7 @@ namespace KBHKY2_HFT_2021221.Logic
                    on car.BrandId equals brand.Id
                    let joinedSet = new {car.BasePrice, brand.Name}
                    group joinedSet by joinedSet.Name into g
+                   orderby g.Key
                    select new KeyValuePair<string, double>
                    (g.Key, g.Average(x => x.BasePrice));
         }
@@ -74,6 +75,7 @@ namespace KBHKY2_HFT_2021221.Logic
                    on car.BrandId equals brand.Id
                    let joinedSet = new { car.Id, brand.Name }
                    group joinedSet by joinedSet.Name into g
+                   orderby g.Key
                    select new KeyValuePair<string, int>
                    (g.Key, g.Count());
         }

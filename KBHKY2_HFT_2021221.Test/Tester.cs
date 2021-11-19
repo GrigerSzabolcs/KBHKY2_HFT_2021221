@@ -105,5 +105,35 @@ namespace KBHKY2_HFT_2021221.Test
                 }
                 ));
         }
+
+        [Test]
+        public void AVGPriceByBrands()
+        {
+            var result = cl.AVGPriceByBrands();
+            Assert.That(
+                result,
+                Is.EqualTo(new List<KeyValuePair<string, double>>()
+                {
+                    new KeyValuePair<string, double>("Audi", 22500),
+                    new KeyValuePair<string, double>("BMW", 25000),
+                    new KeyValuePair<string, double>("Citroen", 12500)
+                }
+                ));
+        }
+
+        [Test]
+        public void CountCarsByBrand()
+        {
+            var result = cl.CountCarsByBrand();
+            Assert.That(
+                result,
+                Is.EqualTo(new List<KeyValuePair<string, int>>()
+                {
+                    new KeyValuePair<string, int>("Audi", 2),
+                    new KeyValuePair<string, int>("BMW", 2),
+                    new KeyValuePair<string, int>("Citroen", 2)
+                }
+                ));
+        }
     }
 }
