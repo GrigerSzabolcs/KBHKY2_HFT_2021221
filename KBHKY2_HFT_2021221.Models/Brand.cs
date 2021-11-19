@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace KBHKY2_HFT_2021221.Models
@@ -16,6 +17,7 @@ namespace KBHKY2_HFT_2021221.Models
         [Required]
         public string Name { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<Car> Cars { get; set; }
         public Brand()
         {

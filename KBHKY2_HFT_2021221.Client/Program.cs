@@ -23,7 +23,8 @@ namespace KBHKY2_HFT_2021221.Client
             var t4 = carLogic.SeniorOwners();
             var t5 = carLogic.ExpensiveCarOwners();
             var t6 = carLogic.MAXPriceByBrands();
-            ;
+
+            Console.ReadKey();
 
         }
     }
