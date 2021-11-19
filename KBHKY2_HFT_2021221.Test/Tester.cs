@@ -102,6 +102,25 @@ namespace KBHKY2_HFT_2021221.Test
                 }), Throws.Exception);
             }
         }
+        [TestCase("Astra", true)]
+        [TestCase("AVILÁGLEGESLEGESLEGHOSSZABBAUTÓMÁRKANEVEMELYHOSSZABBMINT64KARAKTER", false)]
+        public void CreateBrandTest(string model, bool result)
+        {
+            if (result)
+            {
+                Assert.That(() => bl.Create(new Brand()
+                {
+                    Name = model
+                }), Throws.Nothing); ;
+            }
+            else
+            {
+                Assert.That(() => bl.Create(new Brand()
+                {
+                    Name = model
+                }), Throws.Exception);
+            }
+        }
 
         [Test]
         public void ModelNamesWithBrandTest()

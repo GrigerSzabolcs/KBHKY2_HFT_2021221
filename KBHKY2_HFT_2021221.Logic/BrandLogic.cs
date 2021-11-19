@@ -17,6 +17,10 @@ namespace KBHKY2_HFT_2021221.Logic
         }
         public void Create(Brand brand)
         {
+            if (brand.Name.Length>64)
+            {
+                throw new ArgumentException("The brand name has too many characters. (64+)");
+            }
             brandRepo.Create(brand);
         }
         public Brand Read(int id)
