@@ -82,12 +82,6 @@ namespace KBHKY2_HFT_2021221.Test
             }
         }
 
-        //IEnumerable<KeyValuePair<string, string>> ModelNamesWithBrand();
-        //IEnumerable<KeyValuePair<string, double>> AVGPriceByBrands();
-        //IEnumerable<KeyValuePair<string, int>> CountCarsByBrand();
-        //IEnumerable<KeyValuePair<string, string>> SeniorOwners();
-        //IEnumerable<KeyValuePair<string, string>> ExpensiveCarOwners();
-        //IEnumerable<KeyValuePair<string, int>> MAXPriceByBrands();
         [Test]
         public void ModelNamesWithBrandTest()
         {
@@ -163,6 +157,20 @@ namespace KBHKY2_HFT_2021221.Test
                     new KeyValuePair<string, string>("Jim", "Amos"),
                     new KeyValuePair<string, string>("Johnny", "Stinson"),
                     new KeyValuePair<string, string>("Wilbur", "Scott")
+                }
+                ));
+        }
+        [Test]
+        public void MAXPriceByBrands()
+        {
+            var result = cl.MAXPriceByBrands();
+            Assert.That(
+                result,
+                Is.EqualTo(new List<KeyValuePair<string, int>>()
+                {
+                    new KeyValuePair<string, int>("Audi", 25000),
+                    new KeyValuePair<string, int>("BMW", 30000),
+                    new KeyValuePair<string, int>("Citroen", 15000)
                 }
                 ));
         }

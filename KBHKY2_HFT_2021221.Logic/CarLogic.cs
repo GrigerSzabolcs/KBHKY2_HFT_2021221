@@ -107,6 +107,7 @@ namespace KBHKY2_HFT_2021221.Logic
                    join brand in brandRepo.ReadAll()
                    on car.BrandId equals brand.Id
                    group car by brand.Name into g
+                   orderby g.Key
                    select new KeyValuePair<string, int>
                    (g.Key, g.Max(car => car.BasePrice));
         }
