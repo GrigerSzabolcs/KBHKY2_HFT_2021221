@@ -87,6 +87,7 @@ namespace KBHKY2_HFT_2021221.Logic
                    join owner in ownerRepo.ReadAll()
                    on car.Id equals owner.CarId
                    where owner.Age > 50
+                   orderby car.Model
                    select new KeyValuePair<string, string>
                    (car.Model, owner.FirstName);
         }
