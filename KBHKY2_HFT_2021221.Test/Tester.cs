@@ -62,7 +62,7 @@ namespace KBHKY2_HFT_2021221.Test
 
         [TestCase(-3000, false)]
         [TestCase(3000, true)]
-        public void CreateCarTest(int price, bool result)
+        public void CreateCarPriceTest(int price, bool result)
         {
             if (result)
             {
@@ -78,6 +78,27 @@ namespace KBHKY2_HFT_2021221.Test
                 {
                     Model = "Astra",
                     BasePrice = price
+                }), Throws.Exception);
+            }
+        }
+        [TestCase("Astra", true)]
+        [TestCase("", false)]
+        public void CreateCarModelTest(string model, bool result)
+        {
+            if (result)
+            {
+                Assert.That(() => cl.Create(new Car()
+                {
+                    Model = model,
+                    BasePrice = 10000
+                }), Throws.Nothing);
+            }
+            else
+            {
+                Assert.That(() => cl.Create(new Car()
+                {
+                    Model = model,
+                    BasePrice = 10000
                 }), Throws.Exception);
             }
         }

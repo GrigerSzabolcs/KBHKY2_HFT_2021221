@@ -25,6 +25,10 @@ namespace KBHKY2_HFT_2021221.Logic
             {
                 throw new ArgumentException("Negative price is not allowed");
             }
+            else if (car.Model == "")
+            {
+                throw new ArgumentException("Model name cannot be empty");
+            }
             carRepo.Create(car);
         }
         public Car Read(int id)
@@ -62,11 +66,6 @@ namespace KBHKY2_HFT_2021221.Logic
                    select new KeyValuePair<string, double>
                    (g.Key, g.Average(x => x.BasePrice));
         }
-        //Legdrágább autók + tulajdonosai brand alapján csoportosítva
-        //public IEnumerable<KeyValuePair<string, string>> MAXPriceByBrandsWithOwners()
-        //{
-
-        //}
 
         public IEnumerable<KeyValuePair<string, int>> CountCarsByBrand()
         {
