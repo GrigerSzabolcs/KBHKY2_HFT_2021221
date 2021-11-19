@@ -150,5 +150,21 @@ namespace KBHKY2_HFT_2021221.Test
                 }
                 ));
         }
+
+        [Test]
+        public void ExpensiveCarOwners()
+        {
+            var result = cl.ExpensiveCarOwners();
+            Assert.That(
+                result,
+                Is.EqualTo(new List<KeyValuePair<string, string>>()
+                {
+                    new KeyValuePair<string, string>("Jim", "Amos"),
+                    new KeyValuePair<string, string>("Jim", "Amos"),
+                    new KeyValuePair<string, string>("Johnny", "Stinson"),
+                    new KeyValuePair<string, string>("Wilbur", "Scott")
+                }
+                ));
+        }
     }
 }

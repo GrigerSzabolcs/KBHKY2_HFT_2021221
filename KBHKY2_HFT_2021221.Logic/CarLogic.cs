@@ -97,6 +97,7 @@ namespace KBHKY2_HFT_2021221.Logic
                    join owner in ownerRepo.ReadAll()
                    on car.Id equals owner.CarId
                    where car.BasePrice >= 20000
+                   orderby owner.FirstName
                    select new KeyValuePair<string, string>
                    (owner.FirstName, owner.LastName);            
         }
