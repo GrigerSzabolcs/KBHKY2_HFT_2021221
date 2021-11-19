@@ -17,6 +17,10 @@ namespace KBHKY2_HFT_2021221.Logic
         }
         public void Create(Owner owner)
         {
+            if (owner.Age<0)
+            {
+                throw new ArgumentException("Negative age is not allowed");
+            }
             ownerRepo.Create(owner);
         }
         public Owner Read(int id)

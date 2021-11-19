@@ -122,6 +122,30 @@ namespace KBHKY2_HFT_2021221.Test
             }
         }
 
+        [TestCase(21, true)]
+        [TestCase(-1, false)]
+        public void CreateOwnerTest(int age, bool result)
+        {
+            if (result)
+            {
+                Assert.That(() => ol.Create(new Owner()
+                {
+                    FirstName="Gipsz",
+                    LastName="Jakab",
+                    Age=age
+                }), Throws.Nothing);
+            }
+            else
+            {
+                Assert.That(() => ol.Create(new Owner()
+                {
+                    FirstName = "Gipsz",
+                    LastName = "Jakab",
+                    Age = age
+                }), Throws.Exception);
+            }
+        }
+
         [Test]
         public void ModelNamesWithBrandTest()
         {
