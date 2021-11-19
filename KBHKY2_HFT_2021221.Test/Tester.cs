@@ -64,8 +64,6 @@ namespace KBHKY2_HFT_2021221.Test
         [TestCase(3000, true)]
         public void CreateCarTest(int price, bool result)
         {
-
-            //ACT + ASSERT
             if (result)
             {
                 Assert.That(() => cl.Create(new Car()
@@ -82,9 +80,30 @@ namespace KBHKY2_HFT_2021221.Test
                     BasePrice = price
                 }), Throws.Exception);
             }
-
         }
 
-        
+        //IEnumerable<KeyValuePair<string, string>> ModelNamesWithBrand();
+        //IEnumerable<KeyValuePair<string, double>> AVGPriceByBrands();
+        //IEnumerable<KeyValuePair<string, int>> CountCarsByBrand();
+        //IEnumerable<KeyValuePair<string, string>> SeniorOwners();
+        //IEnumerable<KeyValuePair<string, string>> ExpensiveCarOwners();
+        //IEnumerable<KeyValuePair<string, int>> MAXPriceByBrands();
+        [Test]
+        public void ModelNamesWithBrandTest()
+        {
+            var result = cl.ModelNamesWithBrand();
+            Assert.That(
+                result,
+                Is.EqualTo(new List<KeyValuePair<string, string>>()
+                { 
+                    new KeyValuePair<string, string>("BMW 116d", "BMW"),
+                    new KeyValuePair<string, string>("BMW 510", "BMW"),
+                    new KeyValuePair<string, string>("Citroen C1", "Citroen"),
+                    new KeyValuePair<string, string>("Citroen C3", "Citroen"),
+                    new KeyValuePair<string, string>("Audi A3", "Audi"),
+                    new KeyValuePair<string, string>("Audi A4", "Audi")
+                }
+                ));
+        }
     }
 }
