@@ -19,10 +19,12 @@ namespace KBHKY2_HFT_2021221.Client
 
             var t1 = carLogic.ModelNamesWithBrand();
             var t2 = carLogic.AVGPriceByBrands();
+            
             var t3 = carLogic.CountCarsByBrand();
             var t4 = carLogic.SeniorOwners();
             var t5 = carLogic.ExpensiveCarOwners();
             var t6 = carLogic.MAXPriceByBrands();
+            
 
             Console.ReadKey();
 

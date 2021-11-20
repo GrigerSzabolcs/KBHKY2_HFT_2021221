@@ -25,11 +25,12 @@ namespace KBHKY2_HFT_2021221.Models
         public virtual Brand Brand { get; set; }
         [NotMapped]
         [JsonIgnore]
-        public virtual ICollection<Owner> Owners { get; set; }
-        public Car()
-        {
-            Owners = new HashSet<Owner>();
-        }
+        public virtual Owner Owner { get; set; }
+        //public virtual ICollection<Owner> Owners { get; set; }
+        //public Car()
+        //{
+        //    Owners = new HashSet<Owner>();
+        //}
 
     }
 }

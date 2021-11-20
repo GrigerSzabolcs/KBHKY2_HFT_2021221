@@ -15,6 +15,7 @@ namespace KBHKY2_HFT_2021221.Test
         CarLogic cl;
         BrandLogic bl;
         OwnerLogic ol;
+        
         public Tester()
         {
             var brands = new List<Brand>()
@@ -23,18 +24,28 @@ namespace KBHKY2_HFT_2021221.Test
                  new Brand() { Id = 2, Name = "Citroen" },
                  new Brand() { Id = 3, Name = "Audi" }
             }.AsQueryable();
+            Brand bmw = new Brand() { Id = 1, Name = "BMW" };
+            Brand citroen = new Brand() { Id = 1, Name = "Citroen" };
+            Brand audi = new Brand() { Id = 1, Name = "Audi" };
+
+            Owner johhny = new Owner() { Id = 1, FirstName = "Johnny", LastName = "Stinson", Age = 56, CarId = 1 };
+            Owner wilbur = new Owner() { Id = 2, FirstName = "Wilbur", LastName = "Scott", Age = 29, CarId = 2 };
+            Owner margaret = new Owner() { Id = 3, FirstName = "Margaret", LastName = "Rowell", Age = 63, CarId = 3 };
+            Owner james = new Owner() { Id = 4, FirstName = "James", LastName = "Lanctot", Age = 40, CarId = 4 };
+            Owner jim1 = new Owner() { Id = 5, FirstName = "Jim", LastName = "Amos", Age = 25, CarId = 5 };
+            Owner jim2 = new Owner() { Id = 6, FirstName = "Jim", LastName = "Amos", Age = 56, CarId = 6 };
             var cars = new List<Car>()
             {
-                new Car() { Id = 1, BrandId = 1, BasePrice = 20000, Model = "BMW 116d" },
-                new Car() { Id = 2, BrandId = 1, BasePrice = 30000, Model = "BMW 510" },
-                new Car() { Id = 3, BrandId = 2, BasePrice = 10000, Model = "Citroen C1" },
-                new Car() { Id = 4, BrandId = 2, BasePrice = 15000, Model = "Citroen C3" },
-                new Car() { Id = 5, BrandId = 3, BasePrice = 20000, Model = "Audi A3" },
-                new Car() { Id = 6, BrandId = 3, BasePrice = 25000, Model = "Audi A4" }
+                new Car() { Id = 1, BrandId = 1, BasePrice = 20000, Model = "BMW 116d", Brand=bmw, Owner=johhny},
+                new Car() { Id = 2, BrandId = 1, BasePrice = 30000, Model = "BMW 510", Brand=bmw, Owner=wilbur },
+                new Car() { Id = 3, BrandId = 2, BasePrice = 10000, Model = "Citroen C1", Brand=citroen, Owner=margaret },
+                new Car() { Id = 4, BrandId = 2, BasePrice = 15000, Model = "Citroen C3", Brand=citroen, Owner=james },
+                new Car() { Id = 5, BrandId = 3, BasePrice = 20000, Model = "Audi A3", Brand=audi, Owner=jim1 },
+                new Car() { Id = 6, BrandId = 3, BasePrice = 25000, Model = "Audi A4", Brand=audi, Owner=jim2 }
             }.AsQueryable();
             var owners = new List<Owner>()
             {
-                new Owner() { Id = 1, FirstName = "Johnny", LastName = "Stinson", Age = 56, CarId = 1 },
+                new Owner() { Id = 1, FirstName = "Johnny", LastName = "Stinson", Age = 56, CarId = 1},
                 new Owner() { Id = 2, FirstName = "Wilbur", LastName = "Scott", Age = 29, CarId = 2 },
                 new Owner() { Id = 3, FirstName = "Margaret", LastName = "Rowell", Age = 63, CarId = 3 },
                 new Owner() { Id = 4, FirstName = "James", LastName = "Lanctot", Age = 40, CarId = 4 },
@@ -55,7 +66,7 @@ namespace KBHKY2_HFT_2021221.Test
             mockBrandRepo.Setup((t) => t.ReadAll()).Returns(brands);
             mockOwnerRepo.Setup((t) => t.ReadAll()).Returns(owners);
 
-            cl = new CarLogic(mockCarRepo.Object,mockBrandRepo.Object,mockOwnerRepo.Object);
+            cl = new CarLogic(mockCarRepo.Object,mockBrandRepo.Object, mockOwnerRepo.Object);
             bl = new BrandLogic(mockBrandRepo.Object);
             ol = new OwnerLogic(mockOwnerRepo.Object);
         }

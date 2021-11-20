@@ -40,10 +40,18 @@ namespace KBHKY2_HFT_2021221.Data
             {
                 entity
                 .HasOne(owner => owner.Car)
-                .WithMany(car => car.Owners)
-                .HasForeignKey(owner => owner.CarId)
+                .WithOne(car => car.Owner)
+                .HasForeignKey<Owner>(owner => owner.CarId)
                 .OnDelete(DeleteBehavior.Restrict);
             });
+            //modelBuilder.Entity<Owner>(entity =>
+            //{
+            //    entity
+            //    .HasOne(owner => owner.Car)
+            //    .WithMany(car => car.Owners)
+            //    .HasForeignKey(owner => owner.CarId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+            //});
 
             Brand bmw = new Brand() { Id = 1, Name = "BMW" };
             Brand citroen = new Brand() { Id = 2, Name = "Citroen" };

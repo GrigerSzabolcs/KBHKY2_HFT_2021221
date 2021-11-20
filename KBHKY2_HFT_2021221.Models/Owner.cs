@@ -20,6 +20,7 @@ namespace KBHKY2_HFT_2021221.Models
         public string LastName { get; set; }
         [Required]
         public int Age { get; set; }
+
         [ForeignKey(nameof(Car))]
         public int CarId { get; set; }
         [NotMapped]
