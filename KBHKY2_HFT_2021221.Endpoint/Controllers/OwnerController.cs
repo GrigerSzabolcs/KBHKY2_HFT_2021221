@@ -12,47 +12,47 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CarController : ControllerBase
+    public class OwnerController : ControllerBase
     {
-        ICarLogic cl;
-        public CarController(ICarLogic cl)
+        IOwnerLogic ol;
+        public OwnerController(IOwnerLogic ol)
         {
-            this.cl = cl;
+            this.ol = ol;
         }
-        // GET: /car
+        // GET: /owner
         [HttpGet]
-        public IEnumerable<Car> Get()
+        public IEnumerable<Owner> Get()
         {
-            return cl.ReadAll();
+            return ol.ReadAll();
         }
 
-        // GET /car/4
+        // GET /owner/2
         [HttpGet("{id}")]
-        public Car Get(int id)
+        public Owner Get(int id)
         {
-            Car c = cl.Read(id);
-            return c;
+            Owner o = ol.Read(id);
+            return o;
         }
 
-        // POST /car
+        // POST /owner
         [HttpPost]
-        public void Post([FromBody] Car car)
+        public void Post([FromBody] Owner owner)
         {
-            cl.Create(car);
+            ol.Create(owner);
         }
 
-        // PUT /car
+        // PUT /owner
         [HttpPut]
-        public void Put([FromBody] Car car)
+        public void Put([FromBody] Owner owner)
         {
-            cl.Update(car);
+            ol.Update(owner);
         }
 
-        // DELETE /car
+        // DELETE /owner
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            cl.Delete(id);
+            ol.Delete(id);
         }
     }
 }

@@ -12,47 +12,47 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CarController : ControllerBase
+    public class BrandController : ControllerBase
     {
-        ICarLogic cl;
-        public CarController(ICarLogic cl)
+        IBrandLogic bl;
+        public BrandController(IBrandLogic bl)
         {
-            this.cl = cl;
+            this.bl = bl;
         }
-        // GET: /car
+        // GET: /brand
         [HttpGet]
-        public IEnumerable<Car> Get()
+        public IEnumerable<Brand> Get()
         {
-            return cl.ReadAll();
+            return bl.ReadAll();
         }
 
-        // GET /car/4
+        // GET /brand/2
         [HttpGet("{id}")]
-        public Car Get(int id)
+        public Brand Get(int id)
         {
-            Car c = cl.Read(id);
-            return c;
+            Brand b = bl.Read(id);
+            return b;
         }
 
-        // POST /car
+        // POST /brand
         [HttpPost]
-        public void Post([FromBody] Car car)
+        public void Post([FromBody] Brand brand)
         {
-            cl.Create(car);
+            bl.Create(brand);
         }
 
-        // PUT /car
+        // PUT /brand
         [HttpPut]
-        public void Put([FromBody] Car car)
+        public void Put([FromBody] Brand brand)
         {
-            cl.Update(car);
+            bl.Update(brand);
         }
 
-        // DELETE /car
+        // DELETE /brand
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            cl.Delete(id);
+            bl.Delete(id);
         }
     }
 }
