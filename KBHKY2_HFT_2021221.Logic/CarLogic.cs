@@ -49,119 +49,123 @@ namespace KBHKY2_HFT_2021221.Logic
             carRepo.Delete(id);
         }
 
-        //public IEnumerable<KeyValuePair<string, string>> ModelNamesWithBrand()
-        //{
-        //    return from car in carRepo.ReadAll()
-        //           join brand in brandRepo.ReadAll()
-        //           on car.BrandId equals brand.Id
-        //           select new KeyValuePair<string, string>(car.Model, brand.Name);
-        //}
         public IEnumerable<KeyValuePair<string, string>> ModelNamesWithBrand()
         {
             return from car in carRepo.ReadAll()
-                   select new KeyValuePair<string, string>(car.Model, car.Brand.Name);
+                   join brand in brandRepo.ReadAll()
+                   on car.BrandId equals brand.Id
+                   select new KeyValuePair<string, string>(car.Model, brand.Name);
+        }
+        //public IEnumerable<KeyValuePair<string, string>> ModelNamesWithBrand()
+        //{
+        //    return from car in carRepo.ReadAll()
+        //           select new KeyValuePair<string, string>(car.Model, car.Brand.Name);
+        //}
+
+        public IEnumerable<KeyValuePair<string, double>> AVGPriceByBrands()
+        {
+            return from car in carRepo.ReadAll()
+                   join brand in brandRepo.ReadAll()
+                   on car.BrandId equals brand.Id
+                   let joinedSet = new { car.BasePrice, brand.Name }
+                   group joinedSet by joinedSet.Name into g
+                   orderby g.Key
+                   select new KeyValuePair<string, double>
+                   (g.Key, g.Average(x => x.BasePrice));
         }
 
         //public IEnumerable<KeyValuePair<string, double>> AVGPriceByBrands()
         //{
-        //    return from car in carRepo.ReadAll()
-        //           join brand in brandRepo.ReadAll()
-        //           on car.BrandId equals brand.Id
-        //           let joinedSet = new { car.BasePrice, brand.Name }
-        //           group joinedSet by joinedSet.Name into g
+        //    return from x in carRepo.ReadAll()
+        //           group x by x.Brand.Name into g
         //           orderby g.Key
         //           select new KeyValuePair<string, double>
-        //           (g.Key, g.Average(x => x.BasePrice));
+        //           (g.Key, g.Average(t => t.BasePrice));
         //}
-        public IEnumerable<KeyValuePair<string, double>> AVGPriceByBrands()
-        {
-            return from x in carRepo.ReadAll()
-                   group x by x.Brand.Name into g
-                   orderby g.Key
-                   select new KeyValuePair<string, double>
-                   (g.Key, g.Average(t => t.BasePrice));
-        }
 
-        //public IEnumerable<KeyValuePair<string, int>> CountCarsByBrand()
-        //{
-        //    return from car in carRepo.ReadAll()
-        //           join brand in brandRepo.ReadAll()
-        //           on car.BrandId equals brand.Id
-        //           let joinedSet = new { car.Id, brand.Name }
-        //           group joinedSet by joinedSet.Name into g
-        //           orderby g.Key
-        //           select new KeyValuePair<string, int>
-        //           (g.Key, g.Count());
-        //}
         public IEnumerable<KeyValuePair<string, int>> CountCarsByBrand()
         {
             return from car in carRepo.ReadAll()
-                   group car by car.Brand.Name into g
+                   join brand in brandRepo.ReadAll()
+                   on car.BrandId equals brand.Id
+                   let joinedSet = new { car.Id, brand.Name }
+                   group joinedSet by joinedSet.Name into g
                    orderby g.Key
                    select new KeyValuePair<string, int>
                    (g.Key, g.Count());
         }
 
+        //public IEnumerable<KeyValuePair<string, int>> CountCarsByBrand()
+        //{
+        //    return from car in carRepo.ReadAll()
+        //           group car by car.Brand.Name into g
+        //           orderby g.Key
+        //           select new KeyValuePair<string, int>
+        //           (g.Key, g.Count());
+        //}
+
         //Vissza adja azokat a Modelleket akiknek tulajdonosa 50+-os
+
+        public IEnumerable<KeyValuePair<string, string>> SeniorOwners()
+        {
+            return from car in carRepo.ReadAll()
+                   join owner in ownerRepo.ReadAll()
+                   on car.Id equals owner.CarId
+                   where owner.Age > 50
+                   orderby car.Model
+                   select new KeyValuePair<string, string>
+                   (car.Model, owner.FirstName);
+        }
 
         //public IEnumerable<KeyValuePair<string, string>> SeniorOwners()
         //{
         //    return from car in carRepo.ReadAll()
-        //           join owner in ownerRepo.ReadAll()
-        //           on car.Id equals owner.CarId
-        //           where owner.Age > 50
+        //           where car.Owner.Age > 50
         //           orderby car.Model
         //           select new KeyValuePair<string, string>
-        //           (car.Model, owner.FirstName);
+        //           (car.Model, car.Owner.FirstName);
         //}
-        public IEnumerable<KeyValuePair<string, string>> SeniorOwners()
+
+        public IEnumerable<KeyValuePair<string, string>> ExpensiveCarOwners()
         {
             return from car in carRepo.ReadAll()
-                   where car.Owner.Age > 50
-                   orderby car.Model
+                   join owner in ownerRepo.ReadAll()
+                   on car.Id equals owner.CarId
+                   where car.BasePrice >= 20000
+                   orderby owner.FirstName
                    select new KeyValuePair<string, string>
-                   (car.Model, car.Owner.FirstName);
+                   (owner.FirstName, owner.LastName);
         }
 
         //public IEnumerable<KeyValuePair<string, string>> ExpensiveCarOwners()
         //{
         //    return from car in carRepo.ReadAll()
-        //           join owner in ownerRepo.ReadAll()
-        //           on car.Id equals owner.CarId
         //           where car.BasePrice >= 20000
-        //           orderby owner.FirstName
+        //           orderby car.Owner.FirstName
         //           select new KeyValuePair<string, string>
-        //           (owner.FirstName, owner.LastName);
+        //           (car.Owner.FirstName, car.Owner.LastName);
         //}
-        public IEnumerable<KeyValuePair<string, string>> ExpensiveCarOwners()
-        {
-            return from car in carRepo.ReadAll()
-                   where car.BasePrice >= 20000
-                   orderby car.Owner.FirstName
-                   select new KeyValuePair<string, string>
-                   (car.Owner.FirstName, car.Owner.LastName);
-        }
 
-
-        //public IEnumerable<KeyValuePair<string, int>> MAXPriceByBrands()
-        //{
-        //    return from car in carRepo.ReadAll()
-        //           join brand in brandRepo.ReadAll()
-        //           on car.BrandId equals brand.Id
-        //           group car by brand.Name into g
-        //           orderby g.Key
-        //           select new KeyValuePair<string, int>
-        //           (g.Key, g.Max(car => car.BasePrice));
-        //}
 
         public IEnumerable<KeyValuePair<string, int>> MAXPriceByBrands()
         {
             return from car in carRepo.ReadAll()
-                   group car by car.Brand.Name into g
+                   join brand in brandRepo.ReadAll()
+                   on car.BrandId equals brand.Id
+                   group car by brand.Name into g
                    orderby g.Key
                    select new KeyValuePair<string, int>
                    (g.Key, g.Max(car => car.BasePrice));
         }
+
+        //public IEnumerable<KeyValuePair<string, int>> MAXPriceByBrands()
+        //{
+        //    return from car in carRepo.ReadAll()
+        //           group car by car.Brand.Name into g
+        //           orderby g.Key
+        //           select new KeyValuePair<string, int>
+        //           (g.Key, g.Max(car => car.BasePrice));
+        //}
 
     }
 }

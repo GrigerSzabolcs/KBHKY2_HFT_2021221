@@ -48,7 +48,7 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
             cl.Update(car);
         }
 
-        // DELETE /car
+        // DELETE /car/2
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

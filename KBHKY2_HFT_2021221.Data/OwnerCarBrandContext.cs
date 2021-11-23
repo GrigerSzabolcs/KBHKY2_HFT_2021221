@@ -34,7 +34,7 @@ namespace KBHKY2_HFT_2021221.Data
                 .HasOne(car => car.Brand)
                 .WithMany(brand => brand.Cars)
                 .HasForeignKey(car => car.BrandId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             });
             modelBuilder.Entity<Owner>(entity =>
             {
@@ -42,7 +42,7 @@ namespace KBHKY2_HFT_2021221.Data
                 .HasOne(owner => owner.Car)
                 .WithOne(car => car.Owner)
                 .HasForeignKey<Owner>(owner => owner.CarId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             });
             //modelBuilder.Entity<Owner>(entity =>
             //{

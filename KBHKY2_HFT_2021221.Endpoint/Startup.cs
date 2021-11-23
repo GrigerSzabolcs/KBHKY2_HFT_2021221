@@ -21,15 +21,15 @@ namespace KBHKY2_HFT_2021221.Endpoint
         {
             services.AddControllers();
 
-            services.AddTransient<ICarLogic, CarLogic>();
-            services.AddTransient<IBrandLogic, BrandLogic>();
-            services.AddTransient<IOwnerLogic, OwnerLogic>();
+            services.AddSingleton<ICarLogic, CarLogic>();
+            services.AddSingleton<IBrandLogic, BrandLogic>();
+            services.AddSingleton<IOwnerLogic, OwnerLogic>();
 
-            services.AddTransient<ICarRepository, CarRepository>();
-            services.AddTransient<IBrandRepository, BrandRepository>();
-            services.AddTransient<IOwnerRepository, OwnerRepository>();
+            services.AddSingleton<ICarRepository, CarRepository>();
+            services.AddSingleton<IBrandRepository, BrandRepository>();
+            services.AddSingleton<IOwnerRepository, OwnerRepository>();
 
-            services.AddTransient<OwnerCarBrandContext, OwnerCarBrandContext>();
+            services.AddSingleton<OwnerCarBrandContext, OwnerCarBrandContext>();
 
         }
 
