@@ -14,7 +14,7 @@ namespace KBHKY2_HFT_2021221.Client
             for (int i = 0; i < input.Length; i++)
             {
                 if(input[i]=='0' || input[i] == '1' || input[i] == '2' || input[i] == '3' || input[i] == '4' || input[i] == '5' || input[i] == '6' || input[i] == '7' || input[i] == '8' || input[i] == '9') { }
-                else { eredmeny = false; }
+                else { return false; }
             }
             return eredmeny;
         }
@@ -100,7 +100,7 @@ namespace KBHKY2_HFT_2021221.Client
             if (intInputCheck(input))
             {
                 int id = int.Parse(input);
-                var car = rest.GetSingle<Car>($"owner/{id}");
+                var car = rest.GetSingle<Car>($"car/{id}");
                 if (car != null)
                 {
                     rest.Delete(id, "car");
@@ -147,6 +147,99 @@ namespace KBHKY2_HFT_2021221.Client
             else { Console.WriteLine("Wront ID! ID can only be a positive number. Are you sure you gave the right input? (Input must be less than 1.000.000.000)"); }
             Console.WriteLine();
         }
+        static void CreateCar(RestService rest)
+        {
+            Car c = new Car();
+            Console.WriteLine("To create a new car in the database, please fill out the followings:");
+            Console.Write("\nModel of the car: ");
+            c.Model = Console.ReadLine();
+            Console.Write("\nBasePrice of the car: ");
+            string input = "x";
+            while (!intInputCheck(input))
+            {
+                input = Console.ReadLine();
+                if (intInputCheck(input) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+            }
+            c.BasePrice = int.Parse(input);
+            Console.Write("\nIn case you've changed your mind and dont want to create a new car, give 'x' as an input here!");
+            Console.Write("\nBrand of the car (give the ID of the brand): ");
+
+            string input2 = "asd";
+            bool wecool = false;
+            bool changedMind = false;
+            while (!wecool)
+            {
+                input2 = Console.ReadLine();
+                if (input2 == "x") { wecool = true; changedMind = true; }
+                else
+                {
+                    if (intInputCheck(input2) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+                    else if (intInputCheck(input2) == true)
+                    {
+                        var brand = rest.GetSingle<Brand>($"brand/{input2}");
+                        if (brand == null) { Console.WriteLine($"We could not find a brand in the database with the ID of {input2}. Try again!"); }
+                        else { c.BrandId = int.Parse(input2); wecool = true; Console.WriteLine("A new car was inserted to the database!"); }
+                    }
+                }
+            }
+            if (!changedMind) { rest.Post<Car>(c, "car"); }
+        }
+        static void CreateBrand(RestService rest)
+        {
+            Brand b = new Brand();
+            var brands = rest.Get<Brand>("brand").Select(b => b.Name);
+            bool wecool = false;
+            Console.WriteLine("To create a new brand in the database, please fill out the followings:");
+            do
+            {
+                Console.Write("\nName of the brand: ");
+                b.Name = Console.ReadLine();
+                if (!brands.Contains(b.Name)) { wecool = true; }
+                else { Console.WriteLine($"There is already a brand in the database with the name: {b.Name}. Try another name!"); }
+            } while (!wecool);
+            rest.Post<Brand>(b, "brand");
+            Console.WriteLine("A new brand was inserted to the database!");
+        }
+        static void CreateOwner(RestService rest)
+        {
+            Owner o = new Owner();           
+            Console.WriteLine("To create a new owner in the database, please fill out the followings:");
+            Console.Write("\nFirst name of the owner: ");
+            o.FirstName = Console.ReadLine();
+            Console.Write("\nLast name of the owner: ");
+            o.LastName = Console.ReadLine();
+            Console.Write("\nAge of the owner: ");
+            string input = "x";
+            while (!intInputCheck(input))
+            {
+                input = Console.ReadLine();
+                if (intInputCheck(input) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+            }
+            o.Age = int.Parse(input);
+
+            Console.Write("\nIn case you've changed your mind and dont want to create a new owner, give 'x' as an input here!");
+            Console.Write("\nCar of the owner (give the ID of the car): ");          
+            string input2 = "asd";
+            bool wecool = false;
+            bool changedMind = false;
+            while (!wecool)
+            {
+                input2 = Console.ReadLine();
+                if (input2 == "x") { wecool = true; changedMind = true; }
+                else
+                {
+                    if (intInputCheck(input2) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+                    else if (intInputCheck(input2) == true)
+                    {
+                        var car = rest.GetSingle<Car>($"car/{input2}");
+                        if (car == null) { Console.WriteLine($"We could not find a car in the database with the ID of {input2}. Try again!"); }
+                        else { o.CarId = int.Parse(input2); wecool = true; Console.WriteLine("A new owner was inserted to the database!"); }
+                    }
+                }
+            }         
+            if (!changedMind) { rest.Post<Owner>(o, "owner"); }
+        }
+
         static void Main(string[] args)
         {
             System.Threading.Thread.Sleep(3000);
@@ -189,11 +282,20 @@ namespace KBHKY2_HFT_2021221.Client
                     case 9:
                         DeleteOwner(rest);
                         break;
+                    case 10:
+                        CreateCar(rest);
+                        break;
+                    case 11:
+                        CreateBrand(rest);
+                        break;
+                    case 12:
+                        CreateOwner(rest);
+                        break;
                     default:
                         break;
                 }
                 //Would you like to go back to the menu or exit the app
-                Console.WriteLine("To get back to the menu, please press 1. To exit the application please press 2.");
+                Console.WriteLine("\nTo get back to the menu, please press 1. To exit the application please press 2.");
                 int input2 = int.Parse(Console.ReadLine());
                 if (input2 == 2) { exit = true; };
             }
