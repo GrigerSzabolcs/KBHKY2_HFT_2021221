@@ -183,6 +183,7 @@ namespace KBHKY2_HFT_2021221.Client
                 }
             }
             if (!changedMind) { rest.Post<Car>(c, "car"); }
+            else { Console.WriteLine("CreateCar aborted!"); }
         }
         static void CreateBrand(RestService rest)
         {
@@ -238,7 +239,169 @@ namespace KBHKY2_HFT_2021221.Client
                 }
             }         
             if (!changedMind) { rest.Post<Owner>(o, "owner"); }
+            else { Console.WriteLine("CreateOwner aborted!"); }
         }
+        static void UpdateCar(RestService rest)
+        {
+            Car c = new Car();
+
+            Console.WriteLine("To update a car in the database, please fill out the followings:");
+            Console.Write("\nIn case you've changed your mind and dont want to update the car, give 'x' as an input here!");
+            Console.Write("\nID of the car:");
+            string input3 = "asd";
+            bool wecool2 = false;
+            bool changedMind2 = false;
+            while (!wecool2)
+            {
+                input3 = Console.ReadLine();
+                if (input3 == "x") { wecool2 = true; changedMind2 = true; }
+                else
+                {
+                    if (intInputCheck(input3) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+                    else if (intInputCheck(input3) == true)
+                    {
+                        var car = rest.GetSingle<Car>($"car/{input3}");
+                        if (car == null) { Console.WriteLine($"We could not find a car in the database with the ID of {input3}. Try again!"); }
+                        else { c.Id = int.Parse(input3); wecool2 = true;  }
+                    }
+                }
+            }
+            bool changedMind = false;
+            if (!changedMind2)
+            {
+                Console.Write("\nNew model of the car: ");
+                c.Model = Console.ReadLine();
+                Console.Write("\nNew basePrice of the car: ");
+                string input = "x";
+                while (!intInputCheck(input))
+                {
+                    input = Console.ReadLine();
+                    if (intInputCheck(input) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+                }
+                c.BasePrice = int.Parse(input);
+                Console.Write("\nIn case you've changed your mind and dont want to update the car, give 'x' as an input here!");
+                Console.Write("\nNew brand of the car (give the ID of the brand): ");
+
+                string input2 = "asd";
+                bool wecool = false;
+                
+                while (!wecool)
+                {
+                    input2 = Console.ReadLine();
+                    if (input2 == "x") { wecool = true; changedMind = true; }
+                    else
+                    {
+                        if (intInputCheck(input2) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+                        else if (intInputCheck(input2) == true)
+                        {
+                            var brand = rest.GetSingle<Brand>($"brand/{input2}");
+                            if (brand == null) { Console.WriteLine($"We could not find a brand in the database with the ID of {input2}. Try again!"); }
+                            else { c.BrandId = int.Parse(input2); wecool = true; Console.WriteLine("Car has been updated!"); }
+                        }
+                    }
+                }
+            }
+            if (changedMind || changedMind2) { Console.WriteLine("Car update aborted!"); }
+            else { rest.Put<Car>(c, "car"); }
+        }
+        static void UpdateBrand(RestService rest)
+        {
+            Brand b = new Brand();
+            Console.WriteLine("To update a brand in the database, please fill out the followings:");
+            Console.Write("\nIn case you've changed your mind and dont want to update the brand, give 'x' as an input here!");
+            Console.Write("\nID of the brand:");
+            string input = "asd";
+            bool wecool = false;
+            bool changedMind = false;
+            while (!wecool)
+            {
+                input = Console.ReadLine();
+                if (input == "x") { wecool = true; changedMind = true; }
+                else
+                {
+                    if (intInputCheck(input) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+                    else if (intInputCheck(input) == true)
+                    {
+                        var brand = rest.GetSingle<Brand>($"brand/{input}");
+                        if (brand == null) { Console.WriteLine($"We could not find a brand in the database with the ID of {input}. Try again!"); }
+                        else { b.Id = int.Parse(input); wecool = true; }
+                    }
+                }
+            }
+            Console.Write("\nNew Name of the brand: ");
+            b.Name = Console.ReadLine();
+            if (changedMind) { Console.WriteLine("Brand update aborted!"); }
+            else { rest.Put<Brand>(b, "brand"); }
+        }
+        static void UpdateOwner(RestService rest)
+        {
+            Owner o = new Owner();
+
+            Console.WriteLine("To update an owner in the database, please fill out the followings:");
+            Console.Write("\nIn case you've changed your mind and dont want to update the owner, give 'x' as an input here!");
+            Console.Write("\nID of the owner:");
+            string input3 = "asd";
+            bool wecool2 = false;
+            bool changedMind2 = false;
+            while (!wecool2)
+            {
+                input3 = Console.ReadLine();
+                if (input3 == "x") { wecool2 = true; changedMind2 = true; }
+                else
+                {
+                    if (intInputCheck(input3) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+                    else if (intInputCheck(input3) == true)
+                    {
+                        var owner = rest.GetSingle<Owner>($"owner/{input3}");
+                        if (owner == null) { Console.WriteLine($"We could not find an owner in the database with the ID of {input3}. Try again!"); }
+                        else { o.Id = int.Parse(input3); wecool2 = true; }
+                    }
+                }
+            }
+            bool changedMind = false;
+            if (!changedMind2)
+            {
+                Console.Write("\nNew LastName of the owner: ");
+                o.LastName = Console.ReadLine();
+                Console.Write("\nNew FirstName of the owner: ");
+                o.FirstName = Console.ReadLine();
+
+
+                Console.Write("\nNew age of the owner: ");
+                string input = "x";
+                while (!intInputCheck(input))
+                {
+                    input = Console.ReadLine();
+                    if (intInputCheck(input) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+                }
+                o.Age = int.Parse(input);
+
+                Console.Write("\nIn case you've changed your mind and dont want to update the owner, give 'x' as an input here!");
+                Console.Write("\nNew car of the owner (give the ID of the car): ");
+
+                string input2 = "asd";
+                bool wecool = false;
+
+                while (!wecool)
+                {
+                    input2 = Console.ReadLine();
+                    if (input2 == "x") { wecool = true; changedMind = true; }
+                    else
+                    {
+                        if (intInputCheck(input2) == false) { Console.WriteLine("Error! Wrong input format, try again!"); }
+                        else if (intInputCheck(input2) == true)
+                        {
+                            var car = rest.GetSingle<Car>($"car/{input2}");
+                            if (car == null) { Console.WriteLine($"We could not find a car in the database with the ID of {input2}. Try again!"); }
+                            else { o.CarId = int.Parse(input2); wecool = true; Console.WriteLine("Owner has been updated!"); }
+                        }
+                    }
+                }
+            }
+            if (changedMind || changedMind2) { Console.WriteLine("Owner update aborted!"); }
+            else { rest.Put<Owner>(o, "owner"); }
+        }
+
 
         static void Main(string[] args)
         {
@@ -291,6 +454,15 @@ namespace KBHKY2_HFT_2021221.Client
                     case 12:
                         CreateOwner(rest);
                         break;
+                    case 13:
+                        UpdateCar(rest);
+                        break;
+                    case 14:
+                        UpdateBrand(rest);
+                        break;
+                    case 15:
+                        UpdateOwner(rest);
+                        break;
                     default:
                         break;
                 }
@@ -319,6 +491,15 @@ namespace KBHKY2_HFT_2021221.Client
             Console.WriteLine("[10] CreateCar");
             Console.WriteLine("[11] CreateBrand");
             Console.WriteLine("[12] CreateOwner");
+            Console.WriteLine("[13] UpdateCar");
+            Console.WriteLine("[14] UpdateBrand");
+            Console.WriteLine("[15] UpdateOwner");
+            Console.WriteLine("[16] ModelNamesWithBrand");
+            Console.WriteLine("[17] AVGPriceByBrands");
+            Console.WriteLine("[18] CountCarsByBrand");
+            Console.WriteLine("[19] SeniorOwners");
+            Console.WriteLine("[20] ExpensiveCarOwners");
+            Console.WriteLine("[21] MAXPriceByBrands");
             int input = int.Parse(Console.ReadLine());
             Console.Clear();
             return input;
