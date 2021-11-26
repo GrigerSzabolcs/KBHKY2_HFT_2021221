@@ -401,7 +401,71 @@ namespace KBHKY2_HFT_2021221.Client
             if (changedMind || changedMind2) { Console.WriteLine("Owner update aborted!"); }
             else { rest.Put<Owner>(o, "owner"); }
         }
-
+        static void ModelNamesWithBrand(RestService rest)
+        {
+            var result = rest.Get<KeyValuePair<string, string>>("stat/modelnameswithbrand");
+            Console.WriteLine("\nThe model and brand names of all the cars in the database:\n");
+            if (result != null)
+            {
+                foreach (var item in result)
+                {
+                    Console.WriteLine("Model: {0}, Brand of the model: {1}",item.Key,item.Value);
+                }
+            }
+            else { Console.WriteLine("There is no car in the database."); }
+        }
+        static void AVGPriceByBrands(RestService rest)
+        {
+            var result = rest.Get<KeyValuePair<string, double>>("stat/avgpricebybrands");
+            Console.WriteLine("\nAverage price of the cars grouped by brands:\n");
+            if (result != null)
+            {
+                foreach (var item in result)
+                {
+                    Console.WriteLine("Brand: {0}, AVG price: {1}", item.Key, Math.Round(item.Value,2));
+                }
+            }
+            else { Console.WriteLine("There is no car/brand in the database."); }
+        }
+        static void CountCarsByBrand(RestService rest)
+        {
+            var result = rest.Get<KeyValuePair<string, int>>("stat/countcarsbybrand");
+            Console.WriteLine("\nNumber of cars in each brand:\n");
+            if (result != null)
+            {
+                foreach (var item in result)
+                {
+                    Console.WriteLine("Brand: {0}, CarCount: {1}", item.Key, item.Value);
+                }
+            }
+            else { Console.WriteLine("There is no car in the database."); }
+        }
+        static void ExpensiveCarOwners(RestService rest)
+        {
+            var result = rest.Get<KeyValuePair<string, string>>("stat/expensivecarowners");
+            Console.WriteLine("\nList of the expensive car (price>19999) owners in the database:\n");
+            if (result != null)
+            {
+                foreach (var item in result)
+                {
+                    Console.WriteLine(" -- {0} {1}", item.Key, item.Value);
+                }
+            }
+            else { Console.WriteLine("We could not find any."); }
+        }
+        static void MAXPriceByBrands(RestService rest)
+        {
+            var result = rest.Get<KeyValuePair<string, int>>("stat/maxpricebybrands");
+            Console.WriteLine("\nList of the most expensive cars of each brand:\n");
+            if (result != null)
+            {
+                foreach (var item in result)
+                {
+                    Console.WriteLine("Brand: {0}, MaxPrice: {1}", item.Key, item.Value);
+                }
+            }
+            else { Console.WriteLine("There is no car/brand in the database."); }
+        }
 
         static void Main(string[] args)
         {
@@ -463,13 +527,35 @@ namespace KBHKY2_HFT_2021221.Client
                     case 15:
                         UpdateOwner(rest);
                         break;
+                    case 16:
+                        ModelNamesWithBrand(rest);
+                        break;
+                    case 17:
+                        AVGPriceByBrands(rest);
+                        break;
+                    case 18:
+                        CountCarsByBrand(rest);
+                        break;
+                    case 19:
+                        ExpensiveCarOwners(rest);
+                        break;
+                    case 20:
+                        MAXPriceByBrands(rest);
+                        break;
                     default:
                         break;
                 }
                 //Would you like to go back to the menu or exit the app
                 Console.WriteLine("\nTo get back to the menu, please press 1. To exit the application please press 2.");
-                int input2 = int.Parse(Console.ReadLine());
-                if (input2 == 2) { exit = true; };
+                string input2 = "x";
+                while (!(input2 == "1" || input2 == "2"))
+                {
+                    input2 = Console.ReadLine();
+                    if (input2 == "1" || input2 == "2") { }
+                    else { Console.WriteLine("Error! Wrong input format, try again!"); }
+                }
+                if (input2 == "2") { exit = true; };
+
             }
             Environment.Exit(0);                   
 
@@ -497,9 +583,8 @@ namespace KBHKY2_HFT_2021221.Client
             Console.WriteLine("[16] ModelNamesWithBrand");
             Console.WriteLine("[17] AVGPriceByBrands");
             Console.WriteLine("[18] CountCarsByBrand");
-            Console.WriteLine("[19] SeniorOwners");
-            Console.WriteLine("[20] ExpensiveCarOwners");
-            Console.WriteLine("[21] MAXPriceByBrands");
+            Console.WriteLine("[19] ExpensiveCarOwners");
+            Console.WriteLine("[20] MAXPriceByBrands");
             int input = int.Parse(Console.ReadLine());
             Console.Clear();
             return input;

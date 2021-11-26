@@ -17,7 +17,6 @@ namespace KBHKY2_HFT_2021221.Logic
         IEnumerable<KeyValuePair<string, string>> ModelNamesWithBrand();
         IEnumerable<KeyValuePair<string, double>> AVGPriceByBrands();
         IEnumerable<KeyValuePair<string, int>> CountCarsByBrand();
-        IEnumerable<KeyValuePair<string, string>> SeniorOwners();
         IEnumerable<KeyValuePair<string, string>> ExpensiveCarOwners();
         IEnumerable<KeyValuePair<string, int>> MAXPriceByBrands();
 

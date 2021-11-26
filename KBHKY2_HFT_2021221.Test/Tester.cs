@@ -206,21 +206,6 @@ namespace KBHKY2_HFT_2021221.Test
         }
 
         [Test]
-        public void SeniorOwners()
-        {
-            var result = cl.SeniorOwners();
-            Assert.That(
-                result,
-                Is.EqualTo(new List<KeyValuePair<string, string>>()
-                {
-                    new KeyValuePair<string, string>("Audi A4", "Jim"),
-                    new KeyValuePair<string, string>("BMW 116d", "Johnny"),
-                    new KeyValuePair<string, string>("Citroen C1", "Margaret")
-                }
-                ));
-        }
-
-        [Test]
         public void ExpensiveCarOwners()
         {
             var result = cl.ExpensiveCarOwners();

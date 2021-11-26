@@ -104,28 +104,6 @@ namespace KBHKY2_HFT_2021221.Logic
         //           (g.Key, g.Count());
         //}
 
-        //Vissza adja azokat a Modelleket akiknek tulajdonosa 50+-os
-
-        public IEnumerable<KeyValuePair<string, string>> SeniorOwners()
-        {
-            return from car in carRepo.ReadAll()
-                   join owner in ownerRepo.ReadAll()
-                   on car.Id equals owner.CarId
-                   where owner.Age > 50
-                   orderby car.Model
-                   select new KeyValuePair<string, string>
-                   (car.Model, owner.FirstName);
-        }
-
-        //public IEnumerable<KeyValuePair<string, string>> SeniorOwners()
-        //{
-        //    return from car in carRepo.ReadAll()
-        //           where car.Owner.Age > 50
-        //           orderby car.Model
-        //           select new KeyValuePair<string, string>
-        //           (car.Model, car.Owner.FirstName);
-        //}
-
         public IEnumerable<KeyValuePair<string, string>> ExpensiveCarOwners()
         {
             return from car in carRepo.ReadAll()

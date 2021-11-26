@@ -42,13 +42,6 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
             return cl.CountCarsByBrand();
         }
 
-        // GET: /stat/seniorowners
-        [HttpGet]
-        public IEnumerable<KeyValuePair<string, string>> SeniorOwners()
-        {
-            return cl.SeniorOwners();
-        }
-
         // GET: /stat/expensivecarowners
         [HttpGet]
         public IEnumerable<KeyValuePair<string, string>> ExpensiveCarOwners()
