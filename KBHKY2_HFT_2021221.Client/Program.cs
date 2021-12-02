@@ -562,7 +562,7 @@ namespace KBHKY2_HFT_2021221.Client
         }
         static private int GetOptionInput()
         {
-            Console.WriteLine("Things to know about the database. This database contains bla bla... Every owner in the database has a car, but not every car has an owner");
+            Console.WriteLine("Things to know about the database. This database cars, their brands and owners. Every owner in the database has a car, but not every car has an owner");
             Console.WriteLine("Welcome to the menu");
             Console.WriteLine("Pick an option:");
             Console.WriteLine("[1] GetAllCars");
@@ -585,9 +585,21 @@ namespace KBHKY2_HFT_2021221.Client
             Console.WriteLine("[18] CountCarsByBrand");
             Console.WriteLine("[19] ExpensiveCarOwners");
             Console.WriteLine("[20] MAXPriceByBrands");
-            int input = int.Parse(Console.ReadLine());
+            Console.WriteLine("[x] Exit the application.");
+            string input = "asd";
+            while (!(input=="1"||input=="2"||input=="3"|| input == "4" || input == "5" || input == "6" || input == "7" || input == "8" || input == "9" || input == "10" || input == "11" ||
+                input == "12" || input == "13" || input == "14" || input == "15" || input == "16" || input == "17" || input == "18" || input == "19" ||input=="20"||input=="x"))
+            {
+                input = Console.ReadLine();
+            }
+            int inputNumber = 0;
+            if (input == "x") { Environment.Exit(0); }
+            else
+            {
+                inputNumber = int.Parse(input);
+            }
             Console.Clear();
-            return input;
+            return inputNumber;
         }
     }
 }
