@@ -1,6 +1,8 @@
-﻿using KBHKY2_HFT_2021221.Logic;
+﻿using KBHKY2_HFT_2021221.Endpoint.Services;
+using KBHKY2_HFT_2021221.Logic;
 using KBHKY2_HFT_2021221.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +17,11 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
     public class OwnerController : ControllerBase
     {
         IOwnerLogic ol;
-        public OwnerController(IOwnerLogic ol)
+        IHubContext<SignalRHub> hub;
+        public OwnerController(IOwnerLogic ol, IHubContext<SignalRHub> hub)
         {
             this.ol = ol;
+            this.hub = hub;
         }
         // GET: /owner
         [HttpGet]
@@ -39,6 +43,7 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
         public void Post([FromBody] Owner owner)
         {
             ol.Create(owner);
+            this.hub.Clients.All.SendAsync("OwnerCreated", owner);
         }
 
         // PUT /owner
@@ -46,13 +51,16 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
         public void Put([FromBody] Owner owner)
         {
             ol.Update(owner);
+            this.hub.Clients.All.SendAsync("OwnerUpdated", owner);
         }
 
         // DELETE /owner
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var ownerToDelete = this.ol.Read(id);
             ol.Delete(id);
+            this.hub.Clients.All.SendAsync("OwnerDeleted", ownerToDelete);
         }
     }
 }

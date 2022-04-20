@@ -1,6 +1,8 @@
-﻿using KBHKY2_HFT_2021221.Logic;
+﻿using KBHKY2_HFT_2021221.Endpoint.Services;
+using KBHKY2_HFT_2021221.Logic;
 using KBHKY2_HFT_2021221.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +17,11 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
     public class BrandController : ControllerBase
     {
         IBrandLogic bl;
-        public BrandController(IBrandLogic bl)
+        IHubContext<SignalRHub> hub;
+        public BrandController(IBrandLogic bl, IHubContext<SignalRHub> hub)
         {
             this.bl = bl;
+            this.hub = hub;
         }
         // GET: /brand
         [HttpGet]
@@ -39,6 +43,7 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
         public void Post([FromBody] Brand brand)
         {
             bl.Create(brand);
+            this.hub.Clients.All.SendAsync("BrandCreated", brand);
         }
 
         // PUT /brand
@@ -46,13 +51,16 @@ namespace KBHKY2_HFT_2021221.Endpoint.Controllers
         public void Put([FromBody] Brand brand)
         {
             bl.Update(brand);
+            this.hub.Clients.All.SendAsync("BrandUpdated", brand);
         }
 
         // DELETE /brand
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var brandToDelete = this.bl.Read(id);
             bl.Delete(id);
+            this.hub.Clients.All.SendAsync("BrandDeleted", brandToDelete);
         }
     }
 }
