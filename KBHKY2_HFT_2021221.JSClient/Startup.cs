@@ -1,7 +1,3 @@
-using KBHKY2_HFT_2021221.Data;
-using KBHKY2_HFT_2021221.Endpoint.Services;
-using KBHKY2_HFT_2021221.Logic;
-using KBHKY2_HFT_2021221.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KBHKY2_HFT_2021221.Endpoint
+namespace KBHKY2_HFT_2021221.JSClient
 {
     public class Startup
     {
@@ -20,20 +16,6 @@ namespace KBHKY2_HFT_2021221.Endpoint
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
-            services.AddSingleton<ICarLogic, CarLogic>();
-            services.AddSingleton<IBrandLogic, BrandLogic>();
-            services.AddSingleton<IOwnerLogic, OwnerLogic>();
-
-            services.AddSingleton<ICarRepository, CarRepository>();
-            services.AddSingleton<IBrandRepository, BrandRepository>();
-            services.AddSingleton<IOwnerRepository, OwnerRepository>();
-
-            services.AddSingleton<OwnerCarBrandContext, OwnerCarBrandContext>();
-
-            services.AddSignalR();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,18 +26,16 @@ namespace KBHKY2_HFT_2021221.Endpoint
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(x => x
-            .AllowCredentials()
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .WithOrigins("http://localhost:34759"));
-
             app.UseRouting();
+
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-                endpoints.MapHub<SignalRHub>("/hub");
+                endpoints.MapGet("/", async context =>
+                {
+                    await context.Response.WriteAsync("Hello World!");
+                });
             });
         }
     }

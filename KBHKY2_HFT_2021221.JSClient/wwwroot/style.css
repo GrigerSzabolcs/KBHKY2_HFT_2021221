@@ -1,0 +1,33 @@
+﻿table{
+    width: 100%;
+}
+
+table, th, td{
+    border: 1px solid black;
+}
+table{
+    border-collapse: collapse;
+}
+table button{
+    padding: 2px;
+}
+
+th, td{
+    padding: 6px;
+}
+th{
+    background-color: lightblue;
+}
+
+#brandformdiv{
+    display:flex;
+    flex-direction:column;
+    margin-bottom:20px;
+}
+#brandformdiv label, button, input{
+    margin:10px;
+    padding: 6px;
+}
+#brandformdiv label{
+    font-weight:bolder;
+}
