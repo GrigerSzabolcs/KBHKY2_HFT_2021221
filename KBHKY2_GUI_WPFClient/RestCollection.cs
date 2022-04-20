@@ -299,7 +299,9 @@ namespace KBHKY2_GUI_WPFClient
                 });
                 this.notify.AddHandler<T>(type.Name + "Deleted", (T item) =>
                 {
+                    
                     var element = items.FirstOrDefault(t => t.Equals(item));
+                    
                     if (element != null)
                     {
                         items.Remove(item);
